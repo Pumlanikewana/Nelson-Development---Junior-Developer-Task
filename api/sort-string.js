@@ -1,4 +1,5 @@
-export default function handler(req, res) {
+// api/sort-string.js
+export default async function handler(req, res) {
   // Set CORS headers to allow requests from any origin
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -16,6 +17,8 @@ export default function handler(req, res) {
   }
 
   try {
+    console.log('Received request:', req.method, req.body);
+    
     // Get the data from the request body
     const { data } = req.body;
 
