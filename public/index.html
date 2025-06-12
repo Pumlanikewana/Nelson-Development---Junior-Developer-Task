@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Endpoint Tester</title>
+    <title>Nelson Development Endpoint Task</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
             <form id="apiTestForm">
                 <div class="form-group">
                     <label for="testString">Test String:</label>
-                    <input type="text" id="testString" name="testString" placeholder="Enter a string to sort (e.g., 'example')" required>
+                    <input type="text" id="testString" name="testString" placeholder="Enter a string to sort" required>
                 </div>
                 <div class="form-group">
                     <label for="apiUrl">Your API URL:</label>
@@ -37,12 +37,13 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Your Email:</label>
-                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
                 </div>
                 <button type="submit">Submit for Validation</button>
             </form>
             <div id="validationResponse" class="response" style="display: none;"></div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

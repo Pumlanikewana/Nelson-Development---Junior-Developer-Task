@@ -1,4 +1,5 @@
- // Test API functionality
+
+// Test API functionality
         document.getElementById('apiTestForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
