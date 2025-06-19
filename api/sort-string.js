@@ -1,5 +1,5 @@
 // api/sort-string.js
-export default async function handler(req, res) {
+export default function handler(req, res) {
   // Set CORS headers to allow requests from any origin
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -17,8 +17,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('Received request:', req.method, req.body);
-    
     // Get the data from the request body
     const { data } = req.body;
 
@@ -33,12 +31,16 @@ export default async function handler(req, res) {
     // Sort the array alphabetically
     const sortedArray = charactersArray.sort();
 
-    // Return the sorted array as a word
+    // Join the sorted array back into a string
+    const sortedString = sortedArray.join('');
+
+    // Return the sorted string
     return res.status(200).json({
-      word: sortedArray
+      word: sortedString
     });
 
   } catch (error) {
+    console.error('Error:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 }

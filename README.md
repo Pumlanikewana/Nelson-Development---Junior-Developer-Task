@@ -1,16 +1,58 @@
-# Nelson-Development---Junior-Developer-Task
-Creating a server-side API endpoint that will receive a webhook containing a single string of data.
+# Nelson Development - Junior Developer Task
 
-# Objectives
--Create a simple server-side API that:
--Accepts a POST request with a JSON body containing a string.
--Converts the string into an array of characters.
--Sorts the array alphabetically.
--Returns the sorted array as a JSON response.
+A simple API endpoint that sorts characters in a string alphabetically.
 
-# Frontend/ User interface
--Create a simple server-side API that:
--Accepts a POST request with a JSON body containing a string.
--Converts the string into an array of characters.
--Sorts the array alphabetically.
--Returns the sorted array as a JSON response.
+## Features
+
+- **String Sorting API**: POST endpoint that accepts a string and returns it sorted alphabetically
+- **Web Interface**: Simple HTML form to test the API
+- **Validation**: Integration with validation endpoint for testing
+
+## API Endpoint
+
+- **URL**: `/api/sort-string`
+- **Method**: POST
+- **Content-Type**: application/json
+- **Request Body**: `{ "data": "your_string_here" }`
+- **Response**: `{ "word": "sorted_string" }`
+
+## Setup
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Run locally:
+   ```bash
+   npm run dev
+   ```
+
+3. Deploy to Vercel:
+   ```bash
+   npm run deploy
+   ```
+
+## Usage
+
+1. Open the web interface
+2. Enter a test string
+3. Enter your API URL (e.g., `https://your-app.vercel.app/api/sort-string`)
+4. Click "Test API" to test your endpoint
+5. Use the validation form to submit your endpoint for review
+
+## Example
+
+**Request:**
+```json
+{
+  "data": "hello"
+}
+```
+
+**Response:**
+```json
+{
+  "word": "ehllo"
+}
+```

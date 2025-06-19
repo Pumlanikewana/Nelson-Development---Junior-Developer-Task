@@ -68,6 +68,11 @@ body {
             border: 1px solid #f5c6cb;
             color: #721c24;
         }
+        .loading {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
         .section {
             margin-bottom: 30px;
             padding: 20px;
