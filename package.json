@@ -4,7 +4,6 @@
   "description": "Junior Developer Task - String Sorting API",
   "scripts": {
     "dev": "vercel dev",
-    "build": "vercel build",
     "deploy": "vercel --prod"
   },
   "dependencies": {},
