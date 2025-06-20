@@ -60,8 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const validationEndpoint = 'https://yhxzjyykdsfkdrmdxgho.supabase.co/functions/v1/junior-dev';
         
         try {
-            // Try POST method first
-            let response = await fetch(validationEndpoint, {
+            // Try different request formats
+            let response;
+            let success = false;
+            
+            // Method 1: POST with JSON body
+            console.log('Trying POST with JSON...');
+            response = await fetch(validationEndpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,21 +77,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
             });
             
-            // If POST fails with 400, try GET method
-            if (response.status === 400) {
-                responseDiv.textContent = 'POST failed, trying GET method...';
+            if (response.ok) {
+                success = true;
+            } else {
+                console.log('POST JSON failed, status:', response.status);
                 
-                const getUrl = `${validationEndpoint}?url=${encodeURIComponent(validationUrl)}&email=${encodeURIComponent(email)}`;
-                response = await fetch(getUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
+                // Method 2: POST with form data
+                console.log('Trying POST with form data...');
+                const formData = new FormData();
+                formData.append('url', validationUrl);
+                formData.append('email', email);
+                
+                response = await fetch(validationEndpoint, {
+                    method: 'POST',
+                    body: formData
                 });
+                
+                if (response.ok) {
+                    success = true;
+                } else {
+                    console.log('POST form data failed, status:', response.status);
+                    
+                    // Method 3: GET with query parameters
+                    console.log('Trying GET with query parameters...');
+                    const getUrl = `${validationEndpoint}?url=${encodeURIComponent(validationUrl)}&email=${encodeURIComponent(email)}`;
+                    response = await fetch(getUrl, {
+                        method: 'GET'
+                    });
+                    
+                    if (response.ok) {
+                        success = true;
+                    } else {
+                        console.log('GET failed, status:', response.status);
+                    }
+                }
             }
             
-            if (!response.ok) {
-                const errorText = await response.text();
+            if (!success) {
+                let errorText = '';
+                try {
+                    errorText = await response.text();
+                    console.log('Error response body:', errorText);
+                } catch (e) {
+                    errorText = 'Could not read response body';
+                    console.log('Could not read error response body');
+                }
                 throw new Error(`HTTP error! status: ${response.status}, response: ${errorText}`);
             }
             
