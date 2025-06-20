@@ -44,18 +44,50 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const responseDiv = document.getElementById('validationResponse');
         
+        // Validate URL format
+        if (!validationUrl.includes('/api/sort-string')) {
+            responseDiv.style.display = 'block';
+            responseDiv.className = 'response error';
+            responseDiv.textContent = 'Error: URL must end with /api/sort-string';
+            return;
+        }
+        
         // Show loading state
         responseDiv.style.display = 'block';
         responseDiv.className = 'response loading';
         responseDiv.textContent = 'Submitting for validation...';
         
-        const validationEndpoint = `https://yhxzjyykdsfkdrmdxgho.supabase.co/functions/v1/junior-dev?url=${encodeURIComponent(validationUrl)}&email=${encodeURIComponent(email)}`;
+        const validationEndpoint = 'https://yhxzjyykdsfkdrmdxgho.supabase.co/functions/v1/junior-dev';
         
         try {
-            const response = await fetch(validationEndpoint);
+            // Try POST method first
+            let response = await fetch(validationEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    url: validationUrl,
+                    email: email
+                })
+            });
+            
+            // If POST fails with 400, try GET method
+            if (response.status === 400) {
+                responseDiv.textContent = 'POST failed, trying GET method...';
+                
+                const getUrl = `${validationEndpoint}?url=${encodeURIComponent(validationUrl)}&email=${encodeURIComponent(email)}`;
+                response = await fetch(getUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+            }
             
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, response: ${errorText}`);
             }
             
             const result = await response.text();
